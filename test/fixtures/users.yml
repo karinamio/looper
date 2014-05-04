@@ -5,3 +5,11 @@ karina:
 	profile_name: "karina_mio"
 	password: "password"
 	password_confirmation: "password"
+
+bob:
+	first_name: "Bob"
+	last_name: "Gee"
+	email: "bobgee@hotmail.com"
+	profile_name: "bobgee"
+	password: "password"
+	password_confirmation: "password"
