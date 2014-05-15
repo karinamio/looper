@@ -13,3 +13,10 @@ bob:
 	profile_name: "bobgee"
 	password: "password"
 	password_confirmation: "password"
+
+mike:
+	first_name: "Mike"
+	last_name: "The Frog"
+	email: "mike@froggie.com"
+	password: "password"
+	password_confirmation: "password"
