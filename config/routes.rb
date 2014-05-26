@@ -11,11 +11,15 @@ Treebook::Application.routes.draw do
 
   as :user do
     get "/login" => 'devise/sessions#new', as: :new_user_session
-    post "/login" => 'devise/sessions#create', as: :new_user_session
+    post "/login" => 'devise/sessions#create', as: :user_session
     delete "/logout" => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :user_friendships
+  resources :user_friendships do
+    member do
+      put :accept
+    end
+  end
 
   resources :statuses
   get 'feed', to: 'statuses#index', as: :feed
