@@ -1,9 +1,15 @@
-class UserFriendshipDecorator < Draper::Base
+class UserFriendshipDecorator < Draper::Decorator
+  delegate_all
   decorates :user_friendship
   def friendship_state
   	model.state.titleize
   end
   def sub_message
-  	"<h3>Do you really want to be friends with Bob?</h3>"
+  	case model.state
+  	when 'pending'
+  	"Friend request pending."
+    when 'accepted'
+  	"You are friends with #{model.friend.first_name}."
   end
+end
 end
