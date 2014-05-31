@@ -9,10 +9,12 @@ class UserFriendshipTest < ActiveSupport::TestCase
   		UserFriendship.create user: users(:karina), friend: users(:mike)
   	end
   end
+
   test "that creating a friendship based on user id and friend id works" do
   	UserFriendship.create user_id: users(:karina).id, friend_id: users(:bob).id
   	assert users(:karina).pending_friends.include?(users(:bob))
   end
+
   context "a new instance" do
     setup do 
       @user_friendship = UserFriendship.new user: users(:karina), friend: users(:mike)
@@ -21,6 +23,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert_equal 'pending', @user_friendship.state
     end
   end
+
   context "#send_request_email" do
     setup do
       @user_friendship = UserFriendship.create user: users(:karina), friend: users(:bob)
@@ -31,6 +34,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       end
     end
   end
+
   context "#mutual_friendship" do
     setup do
       UserFriendship.request users(:karina), users(:bob)
@@ -41,6 +45,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert_equal @friendship2, @friendship1.mutual_friendship 
     end
   end
+
   context "#accept_mutual_friendship!" do
     setup do
       UserFriendship.request users(:karina), users(:bob)
@@ -53,6 +58,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert_equal 'accepted', friendship2.state
     end
   end
+
   context "#accept!" do
     setup do
       @user_frendship = UserFriendship.request users(:karina), users(:bob)
@@ -76,6 +82,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert_equal 'accepted', @user_friendship.mutual_friendship.state
     end
   end
+
   context ".request" do
     should "create two user friendships" do
       assert_difference 'UserFriendship.count', 2 do
@@ -88,6 +95,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       end
     end
   end
+
   context "#delete_mutual_friendship!" do
     setup do
       UserFriendship.request users(:karina), users(:bob)
@@ -100,6 +108,7 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert !UserFriendship.exists?(@friendship2.id)
     end
   end
+
   context "on destroy" do
     setup do 
       UserFriendship.request users(:karina), users(:bob)
@@ -111,4 +120,21 @@ class UserFriendshipTest < ActiveSupport::TestCase
       assert !UserFriendship.exists?(@friendship2.id)
     end
   end
+
+  context "#block!" do
+    setup do
+      @user_friendship = UserFriendship.request users(:karina), users(:bob)
+    end
+    should "set the state to blocked" do
+      @user_friendship.block!
+      assert_equal 'blocked', @user_friendship.state
+      assert_equal 'blocked', @user_friendship.mutual_friendship.state
+    end
+    should "not allow new requests once blocked" do
+      @user_friendship.block!
+      uf = UserFriendship.request users(:karina), users(:bob)
+      assert !uf.save
+    end
+  end
+  
 end

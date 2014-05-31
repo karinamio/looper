@@ -5,7 +5,6 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   def index
     @statuses = Status.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statuses }
@@ -16,7 +15,6 @@ class StatusesController < ApplicationController
   # GET /statuses/1.json
   def show
     @status = Status.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @status }
@@ -27,7 +25,6 @@ class StatusesController < ApplicationController
   # GET /statuses/new.json
   def new
     @status = Status.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @status }
@@ -43,7 +40,6 @@ class StatusesController < ApplicationController
   # POST /statuses.json
   def create
     @status = current_user.statuses.new(params[:status])
-
     respond_to do |format|
       if @status.save
         format.html { redirect_to @status, notice: 'Status was successfully created.' }
@@ -62,7 +58,6 @@ class StatusesController < ApplicationController
     if params[:status] && params[:status].has_key?(:user_id)
       params[:status].delete(:user_id)
     end 
-
     respond_to do |format|
       if @status.update_attributes(params[:status])
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
@@ -79,7 +74,6 @@ class StatusesController < ApplicationController
   def destroy
     @status = Status.find(params[:id])
     @status.destroy
-
     respond_to do |format|
       format.html { redirect_to statuses_url }
       format.json { head :no_content }

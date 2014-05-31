@@ -11,6 +11,23 @@ class StatusesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:statuses)
   end
 
+  test "should display a user's posts when not logged in" do
+    users(:blocked_friend).statuses.create(content: 'Blocked status')
+    users(:bob).statuses.create(content: 'Non-blocked status')
+    get :index
+    assert_match /Non\-blocked status/, response.body
+    assert_match /Blocked\ status/, response.body
+  end
+
+  test "should not display a blocked user's posts when logged in" do
+    sign_in users(:karina)
+    users(:blocked_friend).statuses.create(content: 'Blocked status')
+    users(:bob).statuses.create(content: 'Non-blocked status')
+    get :index
+    assert_match /Non\-blocked status/, response.body
+    assert_no_match /Blocked\ status/, response.body
+  end
+
   test "should be redirected when not logged in" do
     get :new
     assert_response :redirect
@@ -43,7 +60,6 @@ class StatusesControllerTest < ActionController::TestCase
     assert_difference('Status.count') do
       post :create, status: { content: @status.content, name: @status.name, user_id: users(:bob).id }
     end
-
     assert_redirected_to status_path(assigns(:status))
     assert_equal assigns(:status).user_id, users(:karina).id
   end
@@ -89,7 +105,7 @@ class StatusesControllerTest < ActionController::TestCase
     assert_difference('Status.count', -1) do
       delete :destroy, id: @status
     end
-
     assert_redirected_to statuses_path
   end
+  
 end

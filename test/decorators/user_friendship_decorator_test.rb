@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class UserFriendshipDecoratorTest < ActiveSupport::TestCase
+	
 	context "#sub_message" do
 		setup do
 			@friend = create(:user, first_name: 'Bob')
@@ -24,6 +25,7 @@ class UserFriendshipDecoratorTest < ActiveSupport::TestCase
 			end
 		end
 	end
+
 	context "#friendship_state" do
 		context "with a pending user friendship" do
 			setup do
@@ -53,4 +55,5 @@ class UserFriendshipDecoratorTest < ActiveSupport::TestCase
 			end
 		end
 	end
+	
 end
