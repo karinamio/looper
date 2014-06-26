@@ -1,24 +1,29 @@
 <div class = "page-header">
+	<%= link_to image_tag(@user.profile_url) %>
+	<br><br>
 	<h1><%= @user.full_name %></h1>
-</div>
-
-
-<% if signed_in? %>
-<div id = "friend-status">
-	<% if current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
-		<%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: 'btn' %>
-	<% else %>
-		<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn', id: 'add-friendship', data: { friend_id: @user.to_param } %>
+	<br>
+	<% if signed_in? %>
+	<div>
+		<% if current_user.profile_name.eql?(@user.profile_name) %>
+			<%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn' %>
+			<%= link_to 'Show Friends', user_friendships_path, class: 'btn' %>
+		<% elsif current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
+			<%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: 'btn' %>
+		<% else %>
+			<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn', id: 'add-friendship', data: { friend_id: @user.to_param } %>
+		<% end %>
+	</div>
 	<% end %>
 </div>
-<% end %>
 
+<div id = "friend-status">
 <% if @statuses %>
 	<% @statuses.each do |status| %>
 		<div class = "well">
-			<%= status.content %>
-			<hr>
-			<%= link_to time_ago_in_words(status.created_at), status_path(status) %> ago
+			<%= status.content %><br>
+			<%= link_to time_ago_in_words(status.created_at) + ' ago', status_path(status) %>
 		</div>
 	<% end %>
 <% end %>
+</div>

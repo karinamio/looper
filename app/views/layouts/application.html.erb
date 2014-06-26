@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Looper</title>
+  <title>looper</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a href="#" class="brand"> Looper</a>
-				<ul class="nav">
-					<li><%= link_to "All", feed_path %></li>
-				</ul>
-				<ul class="nav pull-right">
-					<% if user_signed_in? %>
-						<li><%= link_to 'Friends', user_friendships_path %></li>
-						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
-						<li><%= link_to "Log Out", logout_path %></li>
-					<% else %>
-						<li><%= link_to "Register", register_path %></li>
-						<li><%= link_to "Log In", login_path %></li>
-					<% end %>
-				</ul>
+<% if !user_signed_in? and request.path == "/" %>
+	<body>
+		<div class = "container">
+			<div class = "welcome">
+			<h1>looper</h1>
+			<h3>the social network you've been waiting for since the advent of the internet</h3>
+			<br>
+			<%= link_to "register", register_path, class: "btn" %>
+			<%= link_to "sign in", login_path, class: "btn" %>
+		</div>
+	</body>
+<% else %>
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a href="#" class="brand">looper</a>
+					<ul class="nav">
+					</ul>
+					<ul class="nav pull-right">
+						<% if user_signed_in? %>
+							<li><%= link_to "Home", feed_path %></li>
+							<li><%= link_to "Profile", current_user.profile_name %></li>
+							<li><%= link_to "Log Out", logout_path %></li>
+						<% else %>
+							<li><%= link_to "Register", register_path %></li>
+							<li><%= link_to "Log In", login_path %></li>
+						<% end %>
+					</ul>
+				</div>
 			</div>
 		</div>
+		<div class="container">
+			<% flash.each do |type, message| %>
+				<div class = "alert <%= flash_class type %>">
+					<button class="close" data-dismiss="alert">x</button>
+					<%= message %>
+				</div>
+			<% end %><br>
+			<%= yield %>
+		</div><br>
+	</body>
+	<div id = "footer">
+		<div class="container">
+    		<p class="muted credit">© 2014 LOOPER</p>
+		</div>
 	</div>
-	<div class="container">
-		<% flash.each do |type, message| %>
-			<div class = "alert <%= flash_class type %>">
-				<button class="close" data-dismiss="alert">x</button>
-				<%= message %>
-			</div>
-		<% end %>
-		<%= yield %>
-	</div>
-</body>
+<% end %>
 </html>

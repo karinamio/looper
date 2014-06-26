@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-                  :first_name, :last_name, :profile_name
+                  :first_name, :last_name, :profile_name, :fb_id
   # attr_accessible :title, :body
 
   validates :first_name, presence: true
@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
   validates :profile_name, presence: true,
                            uniqueness: true,
                            format: {
-                            with: /^[a-zA-Z0-9_-]+$/,
-                            message: 'must be formatted correctly'
+                           with: /^[a-zA-Z0-9_-]+$/,
+                           message: 'must be formatted correctly'
                            }
 
   has_many :statuses
@@ -48,12 +48,28 @@ class User < ActiveRecord::Base
     profile_name
   end
 
-  def gravatar_url
-    stripped_email = email.strip
-    downcased_email = stripped_email.downcase
-    hash = Digest::MD5.hexdigest(downcased_email)
+  # if fb id is not null, exists and not sillouette, use fb photo
 
-    "http://gravatar.com/avatar/#{hash}"
+  def photo_url
+    if fb_id.nil? or fb_id == ""
+      stripped_email = email.strip
+      downcased_email = stripped_email.downcase
+      hash = Digest::MD5.hexdigest(downcased_email)
+      "http://gravatar.com/avatar/#{hash}?&d=mm"
+    else
+      "http://graph.facebook.com/#{fb_id}/picture?width=50&height=50"
+    end
+  end
+
+  def profile_url
+    if fb_id.nil? or fb_id == ""
+      stripped_email = email.strip
+      downcased_email = stripped_email.downcase
+      hash = Digest::MD5.hexdigest(downcased_email)
+      "http://gravatar.com/avatar/#{hash}?s=300&d=mm"
+    else
+      "http://graph.facebook.com/#{fb_id}/picture?width=150&height=150"
+    end
   end
 
   def has_blocked?(other_user)

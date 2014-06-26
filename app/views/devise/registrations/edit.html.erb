@@ -1,21 +1,37 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Edit Profile</h2>
+<br>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
+  <div>
+
+  <div><%= f.label :first_name, "First Name" %><br>
+  <%= f.text_field :first_name %></div>  
+
+  <div><%= f.label :last_name, "Last Name" %><br>
+  <%= f.text_field :last_name %></div>  
+
+  <div><%= f.label :profile_name, "Profile Name" %><br>
+  <%= f.text_field :profile_name %></div>
+
+  <div><%= f.label :fb_id, "Facebook ID" %><br>
+  <%= f.text_field :fb_id %></div>  
+
+  <div><%= f.label :email %><br>
   <%= f.email_field :email %></div>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br>
   <%= f.password_field :password, :autocomplete => "off" %></div>
 
-  <div><%= f.label :password_confirmation, "Password Confirmation" %><br />
+  <div><%= f.label :password_confirmation, "Password Confirmation" %><br>
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :current_password, "Current Password" %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password, "Current Password" %> <i>(we need your current password to confirm your changes)</i><br>
   <%= f.password_field :current_password %></div>
 
   <div><%= f.submit "Update" %></div>
+  </div>
 <% end %>
 
 <h3>Cancel my account</h3>

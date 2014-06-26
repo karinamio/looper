@@ -4,11 +4,11 @@
 
 <div class = "row">
 	<div class = "avatar span2">
-		<%= image_tag @user_friendship.user.gravatar_url %><br>
+		<%= image_tag @user_friendship.user.photo_url %><br>
 		<%= @user_friendship.user.first_name %>
 	</div>
 	<div class = "avatar span2">
-		<%= image_tag @user_friendship.friend.gravatar_url %><br>
+		<%= image_tag @user_friendship.friend.photo_url %><br>
 		<%= @user_friendship.friend.first_name %>
 	</div>
 </div>

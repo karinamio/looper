@@ -10,6 +10,7 @@ gem 'simple_form'
 gem 'state_machine'
 gem 'draper', '~> 1.0'
 gem 'js-routes'
+gem 'tzinfo-data'
 
 group :test do
 	gem 'shoulda'

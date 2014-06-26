@@ -9,17 +9,17 @@
 
 
 	  <% if devise_mapping.rememberable? -%>
-	    <div><%= f.input :remember_me, as: :boolean %></div>
+	  	<%= f.input :remember_me, as: :boolean %>
 	  <% end -%>
 
 	  <div><%= f.button :submit, "Sign In" %></div>
 	</fieldset>
+	
 	<% end %>
 
 	<%= render "devise/shared/links" %>
 	</div>
 
 	<div class="span8">
-		<h2>Signing in is easy and secure</h2>
 	</div>
 </div>
