@@ -1,31 +1,28 @@
-<div class = "page-header">
-	<h1>Viewing Friendship</h1>
-</div>
-
-<div class = "row">
-	<div class = "avatar span2">
-		<%= image_tag @user_friendship.user.photo_url %><br>
-		<%= @user_friendship.user.first_name %>
+<div class="span10 form well friends bottom">
+	<div class = "page-header no-header">
+		<legend>our friendship</legend>
 	</div>
-	<div class = "avatar span2">
-		<%= image_tag @user_friendship.friend.photo_url %><br>
-		<%= @user_friendship.friend.first_name %>
+
+	<div class = "row">
+		<div class = "avatar span4 me">
+			<%= image_tag @user_friendship.user.profile_url %><br><br>
+			<%= @user_friendship.user.full_name %><br><br>
+		</div>
+		<div class = "avatar span4 them">
+			<%= image_tag @user_friendship.friend.profile_url %><br><br>
+			<%= @user_friendship.friend.full_name %><br><br>
+		</div>
 	</div>
-</div>
-<hr>
 
-<h3><%= @user_friendship.sub_message %></h3>
+	<div class = "friendship-page">
+		<legend><%= @user_friendship.sub_message %><br></legend>
+	</div>
 
-<div class = "form-actions">
-	<% if @user_friendship.requested? %>
-		<%= form_for @user_friendship, url: accept_user_friendship_path(@user_friendship), method: :put do |form| %>
-			<%= submit_tag "Accept Friendship", class: 'btn btn-primary' %>
+	<div class = "friendship">
+		<% if @user_friendship.requested? %>
+			<%= link_to "accept", accept_user_friendship_path(@user_friendship), method: :put, class: 'btn btn-success friend' %>
 		<% end %>
-	<% end %>
-	<%= form_for @user_friendship, url: block_user_friendship_path(@user_friendship), method: :put do |form| %>
-		<%= submit_tag "Block Friendship", class: 'btn' %>
-	<% end %>
-	<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
-		<%= submit_tag "Delete Friendship", class: 'btn btn-danger' %>
-	<% end %>
+		<%= link_to "block", block_user_friendship_path(@user_friendship), method: :put, class: 'btn btn-default btn-gray friend' %>
+		<%= link_to "delete", user_friendship_path(@user_friendship), method: :delete, class: 'btn btn-danger friend' %>
+	</div>
 </div>

@@ -10,6 +10,7 @@ Treebook::Application.routes.draw do
     get 'forgot_password', to: 'devise/passwords#new', as: :forgot_password
     get 'confirmation', to: 'devise/confirmations#new', as: :confirmation
     get 'login', to: 'devise/sessions#new', as: :login
+    get "edit_profile" => 'devise/registrations#edit', as: :edit_profile
     get 'logout', to: 'devise/sessions#destroy', as: :logout
   end
 
@@ -29,10 +30,10 @@ Treebook::Application.routes.draw do
   end
 
   resources :statuses
+  get "friends", to: 'user_friendships#index', as: :friends
   get 'feed', to: 'statuses#index', as: :feed
   get '/:id', to: 'profiles#show', as: 'profile'
-
-  end
+end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,20 +1,27 @@
 <div class = "page-header">
-	<%= link_to image_tag(@user.profile_url) %>
-	<br><br>
-	<h1><%= @user.full_name %></h1>
-	<br>
+	<div id = "profile-header">
+		<div class = "profile">
+		<%= image_tag @user.profile_url, :class => 'img-circle' %>
+		<br><br>
+		<legend>
+		<div class = "name"><%= @user.full_name %></div>
 	<% if signed_in? %>
 	<div>
 		<% if current_user.profile_name.eql?(@user.profile_name) %>
-			<%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn' %>
-			<%= link_to 'Show Friends', user_friendships_path, class: 'btn' %>
+			<%= link_to content_tag(:i), edit_profile_path, class: 'glyphicon glyphicon-list-alt fa-lg btn-grey' %>
+			<%= link_to content_tag(:i), friends_path, class: 'glyphicon glyphicon-globe fa-lg btn-grey' %>
 		<% elsif current_user.friends.include?(@user) || current_user.pending_friends.include?(@user) %>
-			<%= link_to "Edit Friendship", edit_user_friendship_path(friend_id: @user), class: 'btn' %>
+			<%= link_to content_tag(:i), edit_user_friendship_path(friend_id: @user), class: 'glyphicon glyphicon-link fa-lg btn-grey' %>
 		<% else %>
-			<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn', id: 'add-friendship', data: { friend_id: @user.to_param } %>
+			<%= link_to content_tag(:i), new_user_friendship_path(friend_id: @user), class: 'glyphicon glyphicon-plus-sign fa-lg btn-grey', id: 'add-friendship', data: { friend_id: @user.to_param } %>
 		<% end %>
 	</div>
 	<% end %>
+	<div id = "requested">
+	</div>
+	</legend>
+	</div>
+</div>
 </div>
 
 <div id = "friend-status">
@@ -22,7 +29,11 @@
 	<% @statuses.each do |status| %>
 		<div class = "well">
 			<%= status.content %><br>
-			<%= link_to time_ago_in_words(status.created_at) + ' ago', status_path(status) %>
+			<% if status.user == current_user %>
+              <%= link_to time_ago_in_words(status.created_at) + " ago", edit_status_path(status) %> 
+            <% else %>
+              <%= link_to time_ago_in_words(status.created_at) + " ago" %>
+            <% end %>
 		</div>
 	<% end %>
 <% end %>

@@ -1,25 +1,21 @@
 <div class="row">
-	<div class="span4">
-	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well"}) do |f| %>
+	<div class="span5 form sign_in">
+	
+	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well-special"}) do |f| %>
 
 	<fieldset>
-		<legend>Sign In</legend>	  
-		<%= f.input :email %>
-		<%= f.input :password %>
-
-
-	  <% if devise_mapping.rememberable? -%>
-	  	<%= f.input :remember_me, as: :boolean %>
-	  <% end -%>
-
-	  <div><%= f.button :submit, "Sign In" %></div>
+		<legend>sign in</legend>  
+		<% flash.each do |type, message| %>
+			<div class = "alert <%= flash_class type %> special">
+				<button class="close" data-dismiss="alert">x</button>
+				<%= message %>
+			</div>
+		<% end %>
+		<%= f.input :email, label: false, placeholder: "email" %>
+		<%= f.input :password, label: false, placeholder: "password" %>
+	  	<%= f.button :submit, "go", class: "btn btn-special btn-block" %>
 	</fieldset>
 	
 	<% end %>
-
-	<%= render "devise/shared/links" %>
-	</div>
-
-	<div class="span8">
 	</div>
 </div>

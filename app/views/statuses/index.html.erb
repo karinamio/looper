@@ -1,29 +1,32 @@
 <div class="page-header">
-  <h1>News Feed</h1>
+  <legend>news feed</legend>
 </div>
 
-<%= link_to "Post a New Status", new_status_path, class: "btn btn-success" %>
-<br><br>
+<%= link_to "post a status", new_status_path, class: "btn btn-success" %>
+<br>
 
 <% @statuses.each do |status| %>
   <% if can_display_status?(status) %>
     <div class="status">
       <div class = "row">
         <div class ="span1">
-          <%= link_to image_tag(status.user.photo_url), profile_path(status.user) %>
+          <%= link_to image_tag(status.user.photo_url), profile_path(status.user), :class => 'img-circle status-photo' %>
         </div>
         <div class = "span7">
           <strong><%= link_to status.user.full_name, profile_path(status.user) %></strong>
           <p><%= status.content %></p>
           <div class="meta">
-            <%= link_to time_ago_in_words(status.created_at) + " ago", status %> 
-            <span class="admin">
-              | <%= link_to "Edit", edit_status_path(status) %> | 
-              <%= link_to "Delete", status, method: :delete, data: { confirm: "Are you sure your want to delete this status?"} %>
-            </span>
+            <% if status.user == current_user %>
+              <%= link_to time_ago_in_words(status.created_at) + " ago", edit_status_path(status) %> 
+            <% else %>
+              <%= link_to time_ago_in_words(status.created_at) + " ago" %>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   <% end %>
 <% end %>
+
+<div class = "extra">
+</div>

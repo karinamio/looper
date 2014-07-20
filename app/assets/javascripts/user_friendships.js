@@ -19,7 +19,7 @@ $(document).ready(function() {
 			type: 'POST',
 			success: function(e) {
 				addFriendshipBtn.hide();
-				$('#friend-status').html("<a href='#' class = 'btn btn-success'>Friendship Requested</a>");
+				$('#requested').html("<a href='#' class = 'btn btn-success form'>requested</a>");
 			}
 		});
 	});
