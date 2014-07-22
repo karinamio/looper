@@ -1,39 +1,36 @@
 <div class = "page-header">
-	<h1>Friends</h1>
+	<legend>friends</legend>
 </div>
 
 <div>
-	<strong>Friend List:</strong>
-	<%= link_to 'Blocked', user_friendships_path(list: 'blocked') %>
-	<%= link_to 'Requested', user_friendships_path(list: 'requested') %>
-	<%= link_to 'Accepted', user_friendships_path(list: 'accepted') %>
-	<%= link_to 'Pending', user_friendships_path(list: 'pending') %>
-</div>
-
-<br>
+	<%= link_to content_tag(:span), user_friendships_path(list: 'blocked'), class: "glyphicon glyphicon-ban-circle fa-lg icon" %>
+	<%= link_to content_tag(:i), user_friendships_path(list: 'requested'), class: "glyphicon glyphicon-warning-sign fa-lg icon" %>
+	<%= link_to content_tag(:i), user_friendships_path(list: 'accepted'), class: "glyphicon glyphicon-check fa-lg icon" %>
+	<%= link_to content_tag(:i), user_friendships_path(list: 'pending'), class: "glyphicon glyphicon-time fa-lg icon" %>
+</div><br>
 
 <% @user_friendships.each do |friendship| %>
 	<% friend = friendship.friend %>
 	<div id = "<%= dom_id(friendship) %>" class = "friend row">
 		<div class = "span1">
-			<%= link_to image_tag(friend.photo_url), profile_path(friend) %>
+			<%= image_tag friend.photo_url, class: 'img-circle' %>
 		</div>
 		<div class = "span7">
-			<strong><%= friend.full_name %></strong>
+			<strong><%= link_to friend.full_name, profile_path(friend) %></strong>
 			<br>
 			<% if friendship.pending? %>
-				<p>Friendship is pending.
-				<br><%= link_to "Delete Request", edit_user_friendship_path(friendship.friend.profile_name) %></p>
+				<p>Friendship pending.
+				<br><%= link_to "ignore", edit_user_friendship_path(friendship.friend.profile_name) %></p>
 			<% end %>
 			<% if friendship.requested? %>
 				Friendship requested.
-				<br><%= link_to "Accept Friendship", edit_user_friendship_path(friendship.friend.profile_name) %>
+				<br><%= link_to "accept", edit_user_friendship_path(friendship.friend.profile_name) %>
 			<% end %>
 			<% if friendship.accepted? %>
 				Friendship started on <%= friendship.updated_at.strftime("%b %d, %Y at %I:%M %p") %>.
-				<br><%= link_to "Update Friendship", edit_user_friendship_path(friendship.friend.profile_name) %>
+				<br><%= link_to "update", edit_user_friendship_path(friendship.friend.profile_name) %>
 			<% end %>
-			<br>
 		</div>
 	</div>
+	<br>
 <% end %>

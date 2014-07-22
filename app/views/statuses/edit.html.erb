@@ -1,6 +1,24 @@
-<h1>Edit Status</h1>
+<div class = "page-header">
+	<legend>edit status</legend>
+</div>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @status %> |
-<%= link_to 'Back', statuses_path %>
+<%= simple_form_for(@status, html: {class: "form-horizontal"}) do |f| %>
+  <% if @status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@status.errors.count, "error") %> prohibited this status from being saved:</h2>
+      <ul>
+      <% @status.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <fieldset>
+      <div class = "container">
+        <%= f.input :content, label: false, placeholder: "type here..." %>
+        <br>
+        <%= f.button :submit, "share with the world", class: 'btn btn-success btn-share' %> &nbsp; &nbsp;
+        <%= link_to "delete", status_path, method: :delete, class: 'btn btn-danger btn-share' %>
+      </div>
+    </fieldset>
+<% end %>

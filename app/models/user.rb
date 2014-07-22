@@ -10,13 +10,13 @@ class User < ActiveRecord::Base
                   :first_name, :last_name, :profile_name, :fb_id
   # attr_accessible :title, :body
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'only use letters' }
+  validates :last_name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'only use letters' }
   validates :profile_name, presence: true,
                            uniqueness: true,
                            format: {
                            with: /^[a-zA-Z0-9_-]+$/,
-                           message: 'must be formatted correctly'
+                           message: 'only use letters and numbers'
                            }
 
   has_many :statuses
@@ -51,6 +51,17 @@ class User < ActiveRecord::Base
   # if fb id is not null, exists and not sillouette, use fb photo
 
   def photo_url
+    if fb_id.nil? or fb_id == ""
+      stripped_email = email.strip
+      downcased_email = stripped_email.downcase
+      hash = Digest::MD5.hexdigest(downcased_email)
+      "http://gravatar.com/avatar/#{hash}?&d=mm"
+    else
+      "http://graph.facebook.com/#{fb_id}/picture?width=50&height=50"
+    end
+  end
+
+  def sidebar_photo_url
     if fb_id.nil? or fb_id == ""
       stripped_email = email.strip
       downcased_email = stripped_email.downcase

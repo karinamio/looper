@@ -1,57 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>looper</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title>looper</title>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
 </head>
 <% if !user_signed_in? and request.path == "/" %>
-	<body>
-		<div class = "container">
-			<div class = "welcome">
-			<h1>looper</h1>
-			<h3>the social network you've been waiting for since the advent of the internet</h3>
-			<br>
-			<%= link_to "register", register_path, class: "btn" %>
-			<%= link_to "sign in", login_path, class: "btn" %>
+	<body class = "apex">
+		<div class = "welcome">
+			<div class = "logo">Ü</div>
+			<div class = "title">looper</div>
+			<div class = "subtitle">the social network you've been waiting for</div>
+			<%= link_to "register", register_path, class: "btn btn-default btn-lg btn-welcome" %> &nbsp; &nbsp; &nbsp;
+			<%= link_to "sign in", login_path, class: "btn btn-default btn-lg btn-welcome" %>
+		</div>
+	</body>
+<% elsif !user_signed_in? %>
+	<body class = "box">
+		<div class="container">
+			<%= yield %>
 		</div>
 	</body>
 <% else %>
 	<body>
-		<div class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<a href="#" class="brand">looper</a>
-					<ul class="nav">
-					</ul>
-					<ul class="nav pull-right">
-						<% if user_signed_in? %>
-							<li><%= link_to "Home", feed_path %></li>
-							<li><%= link_to "Profile", current_user.profile_name %></li>
-							<li><%= link_to "Log Out", logout_path %></li>
-						<% else %>
-							<li><%= link_to "Register", register_path %></li>
-							<li><%= link_to "Log In", login_path %></li>
-						<% end %>
-					</ul>
+		<div class = "container">
+		<div class = "row">
+			<div class = "col-md-3 sidebar-nav">
+				<div class = "nav-wrap">
+				<div class = "nav-looper border">
+					<%= link_to "Ü", nil, class: 'item' %>
+					<%= link_to "looper", nil, class: 'item' %>
+				</div>
+				<div class = "list nav-list">
+					<%= link_to "home", feed_path, class: "item" %><br>
+					<%= link_to "profile", "/" + current_user.profile_name, class: "item" %><br>
+					<%= link_to "network", friends_path, class: "item" %><br>
+				</div>
+				</div>
+				<div class = "nav-button">
+					<%= link_to content_tag(:i), nil, class: "fa fa-cog fa-large item" %>
+					<%= link_to content_tag(:i), logout_path, class: "fa fa-power-off fa-large item" %>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<% flash.each do |type, message| %>
-				<div class = "alert <%= flash_class type %>">
-					<button class="close" data-dismiss="alert">x</button>
-					<%= message %>
+			<div class = "col-md-10 main">
+				<div class = "container">
+					<div class = "nav-date">
+						<div class = "menu" id = "icons">
+							<li><%= link_to content_tag(:i), feed_path, class: "glyphicon glyphicon-home fa-small" %></li>
+							<li><%= link_to content_tag(:i), "/" + current_user.profile_name, class: "glyphicon glyphicon-user fa-small" %></li>
+							<li><%= link_to content_tag(:i), friends_path, class: "glyphicon glyphicon-globe fa-small" %></li>
+						</div>
+					<div class = "menu" id = "line">|</div>
+						<div class = "menu" id = "date">
+							<span><%= Time.now.strftime("%l:%M") %></span>
+						</div>
+					</div>
 				</div>
-			<% end %><br>
-			<%= yield %>
-		</div><br>
-	</body>
-	<div id = "footer">
-		<div class="container">
-    		<p class="muted credit">© 2014 LOOPER</p>
+				<div class="container">
+				<% flash.each do |type, message| %>
+					<div class = "alert <%= flash_class type %>">
+						<button class="close" data-dismiss="alert">x</button>
+						<%= message %>
+					</div>
+				<% end %>
+				<%= yield %>
+				</div>
+			</div>
 		</div>
-	</div>
+		</div>
+	</body>
 <% end %>
 </html>
