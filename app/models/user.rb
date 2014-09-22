@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
       hash = Digest::MD5.hexdigest(downcased_email)
       "http://gravatar.com/avatar/#{hash}?&d=mm"
     else
-      "http://graph.facebook.com/#{fb_id}/picture?width=50&height=50"
+      "http://graph.facebook.com/#{fb_id}/picture?width=70&height=70"
     end
   end
 

@@ -56,10 +56,12 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .sign_in {
 	padding-top: 25%;
+	width: 450px;
 }
 
 .register {
 	padding-top: 13%;
+	width: 450px;
 }
 
 .edit-profile {
@@ -130,6 +132,12 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .friend {
 	margin-top: 10px;
+	margin-left: 1px;
+}
+
+.shift {
+	margin-top: 8px;
+	margin-left: 5px;
 }
 
 .well-special {
@@ -278,7 +286,7 @@ body {
 
 .status {
 	border-bottom: solid 1px #CCC;
-	padding: 15px 0;
+	padding: 15px;
 }
 
 .status p {

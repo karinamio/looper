@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
 gem 'rails', '3.2.6'
 
 # Bundle edge Rails instead:
@@ -11,6 +12,7 @@ gem 'state_machine'
 gem 'draper', '~> 1.0'
 gem 'js-routes'
 gem 'tzinfo-data'
+gem 'rails_12factor'
 
 group :test do
 	gem 'shoulda'
@@ -23,6 +25,8 @@ end
 
 group :production do
 	gem "pg"
+	gem 'rails_log_stdout', github: 'heroku/rails_log_stdout' 
+	gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end
 
 # Gems used only for assets and not required

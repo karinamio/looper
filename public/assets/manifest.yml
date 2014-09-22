@@ -1,6 +1,12 @@
 ---
+fontawesome-webfont.ttf: fontawesome-webfont-ecb929f3acb56dbf473db392dcac4591.ttf
+glyphicons-halflings-regular.ttf: glyphicons-halflings-regular-0c54603383344228e8ab09247a7d5dc5.ttf
+helveticaneue-light.otf: helveticaneue-light-790a671f92cf1b6b11c16026dd647015.otf
 glyphicons-halflings-white.png: glyphicons-halflings-white-13553a5bf21ae3cc374006592488ec64.png
 glyphicons-halflings.png: glyphicons-halflings-f6675c325532ec11a984d58e172b8e2a.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
-application.js: application-b9abeab6ccbe71900e6c6339be901e17.js
-application.css: application-a5a4dfccfd2d0118333c860ab70bd58f.css
+work.jpg: work-9658a52c075380a8d6ed8bc00afe0fbe.jpg
+application.js: application-0f08ea7314a805f4ceb43def6938e267.js
+bootstrap.js: bootstrap-515b100faac041dc3b2ed2d5c820d35b.js
+user_friendships.js: user_friendships-49a8187935276df8ec5cf8334134ca8b.js
+application.css: application-bf1f4cec1790c39016eb951b9c044366.css
